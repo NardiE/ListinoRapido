@@ -159,8 +159,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:text="PREZZO: "
-                android:id="@+id/prezzotw"
+                android:text="ARTICOLO: "
+                android:id="@+id/articolotw"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
         </LinearLayout>
         <LinearLayout
@@ -181,25 +181,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/valoreprezzo"
+                    android:id="@+id/valorenome"
                     android:layout_width="0dp"
-                    android:paddingLeft="2dp"
                     android:textColor="@color/mycolor"
                     android:textColorHint="@color/mycolor"
                     android:backgroundTint="@color/mycolor"
-                    android:text="€"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
                     android:layout_gravity="end"
-                    android:layout_weight="19"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="15"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -224,8 +214,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/mycolor"
-                android:text="LOTTO: "
-                android:id="@+id/lottotw"
+                android:text="PREZZO: "
+                android:id="@+id/prezzotw"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
         </LinearLayout>
         <LinearLayout
@@ -249,10 +239,72 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
                 <TextView
-                    android:id="@+id/valorelotto"
+                    android:id="@+id/valoreprezzo"
                     android:layout_width="0dp"
                     android:paddingLeft="2dp"
                     android:textColor="#ffffff"
+                    android:text="N°"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_weight="30"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="@color/mycolor"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="LOTTO: "
+                android:id="@+id/lottotw"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="#ffffff"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/valorelotto"
+                    android:layout_width="0dp"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/mycolor"
                     android:text="N°"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
@@ -271,20 +323,19 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <LinearLayout
             android:layout_width="0dp"
-            android:background="@color/mycolor"
+            android:background="#ffffff"
             android:layout_height="match_parent"
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:background="#ffffff"
+            android:background="@color/mycolor"
             android:layout_height="match_parent"
             android:layout_weight="1">
         </LinearLayout>

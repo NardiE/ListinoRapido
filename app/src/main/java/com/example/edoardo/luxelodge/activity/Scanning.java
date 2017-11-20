@@ -41,20 +41,24 @@ public class Scanning extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(), "font/Bauhaus.ttf");
         TextView qt = (TextView) findViewById(R.id.prezzotw);
         TextView qt1 = (TextView) findViewById(R.id.lottotw);
+        TextView qt2 = (TextView) findViewById(R.id.articolotw);
         TextView bd = (TextView) findViewById(R.id.valoreprezzo);
         TextView bd1 = (TextView) findViewById(R.id.valorelotto);
+        TextView bd2 = (TextView) findViewById(R.id.valorenome);
         TextView t1 = (TextView) findViewById(R.id.testo);
         TextView t2 = (TextView) findViewById(R.id.testo2);
         TextView t3 = (TextView) findViewById(R.id.testo3);
         EditText bde = (EditText) findViewById(R.id.barcoden);
         bd.setTypeface(font);
         bd1.setTypeface(font);
+        bd2.setTypeface(font);
         bde.setTypeface(font);
         t1.setTypeface(font);
         t2.setTypeface(font);
         t3.setTypeface(font);
         qt.setTypeface(font);
         qt1.setTypeface(font);
+        qt2.setTypeface(font);
 
         scannerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +118,39 @@ public class Scanning extends AppCompatActivity {
 
     public void cercaPrezzo(View view) {
         EditText barcoden = (EditText) findViewById(R.id.barcoden);
-        String codiceabarre = barcoden.getText().toString();
-        List<Barcode> mylistbar = Query.getBarcode(codiceabarre);
-        Barcode mybar = mylistbar.get(0);
-        String codicearticolo = mybar.getCodicearticolo();
-        Articolo articolo = Query.getArticolo(codicearticolo).get(0);
-        //TODO PARAMETRIZZARE
-        Listino mylis = Query.getListino(codicearticolo,"001").get(0);
+        List<Barcode> mylistbar;
+        List<Articolo> myartlist;
+        List<Listino> mylislist;
+        TextView valoreprezzo = (TextView) findViewById(R.id.valoreprezzo);
+        TextView valorelotto = (TextView) findViewById(R.id.valorelotto);
+        TextView valorenome = (TextView) findViewById(R.id.valorenome);
+
+        mylistbar = Query.getBarcode(barcoden.getText().toString());
+        if(mylistbar.size() == 1){
+            Barcode mybar = mylistbar.get(0);
+            String codicearticolo = (mybar).getCodicearticolo();
+            myartlist = Query.getArticolo(codicearticolo);
+            if(myartlist.size() == 1){
+                Articolo myart = myartlist.get(0);
+                //TODO PARAMETRIZZARE
+                mylislist = Query.getListino(codicearticolo,"001");
+                if(mylislist.size() == 1){
+                    Listino mylis = mylislist.get(0);
+                    valoreprezzo.setText(mylis.getPrezzo().toString() + " €");
+                    //TODO implementare valore lotto
+                    valorelotto.setText("");
+                    valorenome.setText(myart.getDescrizione().toString());
+                }
+                else {
+                    Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
+                }
+            }
+            else {
+                Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
+        }
     }
 }

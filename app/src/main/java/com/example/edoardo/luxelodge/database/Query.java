@@ -23,7 +23,7 @@ public class Query {
         return listinofind;
     }
     public static List<Articolo> getArticolo(String codicearticolo){
-        String SQL1 = "SELECT * FROM ARTICOLO WHERE CODICEARTICOLO LIKE '%" + codicearticolo + "%'";
+        String SQL1 = "SELECT * FROM ARTICOLO WHERE CODICE LIKE '%" + codicearticolo + "%'";
         List<Articolo> articolofind;
         articolofind = Articolo.findWithQuery(Articolo.class,SQL1);
         return articolofind;
