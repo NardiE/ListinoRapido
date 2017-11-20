@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">LuxeLodge</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_download">Download</string>
+    <string name="title_activity_sincronizza">Sincronizza</string>
+    <string name="title_activity_scanning">Scanning</string>
+    <string name="scanning_button">Scannerizza Barcode</string>
+    <string name="Scannerizza">SCANNERIZZA BARCODE </string>
+    <string name="title_activity_main">Main</string>
+</resources>

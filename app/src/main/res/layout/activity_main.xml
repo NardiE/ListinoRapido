@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:id="@+id/mylayout"
+    android:layout_width="match_parent"
+    android:background="@color/mycolor"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_margin="20dp"
+        android:text="Scan"
+        android:textColor="#000000"
+        android:textSize="30dp" />
+    <Button
+        android:id="@+id/scanner2"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:onClick="startQrRec"
+        android:text="Bar Code"
+        android:textSize="18dp" >
+    </Button>
+
+    <Button
+        android:id="@+id/sincronizza"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:onClick="sincronizza"
+        android:text="Sincronizza"
+        android:textSize="18dp"></Button>
+
+</LinearLayout>
