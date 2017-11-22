@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
 public class Sincronizza extends AppCompatActivity {
     public static Context context;
     public ProgressDialog barProgressDialog = null;
-    public final Handler updateBarHandler = new Handler();;
+    public final Handler updateBarHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +114,17 @@ public class Sincronizza extends AppCompatActivity {
         //TODO impostare parametri in impostazione
         SharedPreferences sharedpreferences = getSharedPreferences(Impostazioni.preferences, Context.MODE_PRIVATE);
         String serverftp = sharedpreferences.getString(TipiConfigurazione.serverftp,"ftp.signorini.it");
-        Integer portaftp = sharedpreferences.getInt(TipiConfigurazione.portaftp,21);
+        String portaftp = sharedpreferences.getString(TipiConfigurazione.portaftp,"21");
         String nomeutente = sharedpreferences.getString(TipiConfigurazione.nomeutente,"signoriniftp");
         String password = sharedpreferences.getString(TipiConfigurazione.password,"signorini");
-        AsyncFTPDownloader downloader = new AsyncFTPDownloader(serverftp, portaftp, nomeutente, password, filesname, files, this);
-        downloader.execute();
+        try{
+            Integer porta = Integer.parseInt(portaftp);
+            AsyncFTPDownloader downloader = new AsyncFTPDownloader(serverftp, porta, nomeutente, password, filesname, files, this);
+            downloader.execute();
+        }catch (Exception e){
+            Toast.makeText(this,"Errore Porta Controlllare Impostazioni",Toast.LENGTH_LONG).show();
+        }
+
 
 
 
