@@ -1,42 +1,58 @@
 package com.example.edoardo.luxelodge.activity;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edoardo.luxelodge.R;
-import com.example.edoardo.luxelodge.*;
+import com.example.edoardo.luxelodge.classivarie.TipiConfigurazione;
 import com.example.edoardo.luxelodge.classivarie.TipoExtra;
+import com.example.edoardo.luxelodge.classivarie.TipoOp;
 import com.example.edoardo.luxelodge.database.Articolo;
 import com.example.edoardo.luxelodge.database.Barcode;
 import com.example.edoardo.luxelodge.database.Listino;
 import com.example.edoardo.luxelodge.database.Query;
-import com.example.edoardo.luxelodge.utility.Utility;
 
 import java.util.List;
 
 
 public class Scanning extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    Scanning sc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        // setto il titolo
+        getSupportActionBar().setTitle("Listino Rapido");
+        getSupportActionBar().setIcon(R.drawable.logomin);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logomin);
+
+        sc = this;
 
         ImageView scannerBtn = (ImageView) findViewById(R.id.getcode);
+
+        Animation shake = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.shake);
+        (findViewById(R.id.layoutsc)).startAnimation(shake);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "font/Bauhaus.ttf");
         TextView qt = (TextView) findViewById(R.id.prezzotw);
@@ -64,10 +80,17 @@ public class Scanning extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    Intent intent = new Intent(v.getContext(), ZxingScannerActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(v.getContext(), ZxingScannerActivity.class);
+                startActivity(intent);
             }
         });
+        Bundle extras = getIntent().getExtras();
+        int tipoop = extras.getInt(TipoExtra.tipoop);
+        if(tipoop == TipoOp.OP_SCANNERESULT){
+            //mi arrivano barcode e quantita e li inserisco
+            ((EditText)findViewById(R.id.barcoden)).setText(extras.getString(TipoExtra.barcode));
+            popolaCampi();
+        }
     }
 
     @Override
@@ -117,6 +140,10 @@ public class Scanning extends AppCompatActivity {
     }
 
     public void cercaPrezzo(View view) {
+        popolaCampi();
+    }
+
+    public void popolaCampi(){
         EditText barcoden = (EditText) findViewById(R.id.barcoden);
         List<Barcode> mylistbar;
         List<Articolo> myartlist;
@@ -125,25 +152,20 @@ public class Scanning extends AppCompatActivity {
         TextView valorelotto = (TextView) findViewById(R.id.valorelotto);
         TextView valorenome = (TextView) findViewById(R.id.valorenome);
 
-        mylistbar = Query.getBarcode(barcoden.getText().toString());
-        if(mylistbar.size() == 1){
-            Barcode mybar = mylistbar.get(0);
-            String codicearticolo = (mybar).getCodicearticolo();
-            myartlist = Query.getArticolo(codicearticolo);
-            if(myartlist.size() == 1){
-                Articolo myart = myartlist.get(0);
-                //TODO PARAMETRIZZARE
-                mylislist = Query.getListino(codicearticolo,"001");
-                if(mylislist.size() == 1){
-                    Listino mylis = mylislist.get(0);
-                    valoreprezzo.setText(mylis.getPrezzo().toString() + " €");
-                    //TODO implementare valore lotto
-                    valorelotto.setText("");
-                    valorenome.setText(myart.getDescrizione().toString());
-                }
-                else {
-                    Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
-                }
+        String codicearticolo = barcoden.getText().toString();
+        myartlist = Query.getArticolo(codicearticolo);
+        if(myartlist.size() == 1){
+            Articolo myart = myartlist.get(0);
+            //TODO PARAMETRIZZARE
+            SharedPreferences sharedpreferences = getSharedPreferences(Impostazioni.preferences, Context.MODE_PRIVATE);
+            String listino = sharedpreferences.getString(TipiConfigurazione.listinodefault,"001");
+            mylislist = Query.getListino(codicearticolo,listino);
+            if(mylislist.size() == 1){
+                Listino mylis = mylislist.get(0);
+                valoreprezzo.setText(mylis.getPrezzo().toString() + " €");
+                //TODO implementare valore lotto
+                valorelotto.setText("");
+                valorenome.setText(myart.getDescrizione().toString());
             }
             else {
                 Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
@@ -152,5 +174,15 @@ public class Scanning extends AppCompatActivity {
         else {
             Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    public void returntoMain(View view) {
+        Intent i = new Intent(this,Main.class);
+        startActivity(i);
     }
 }

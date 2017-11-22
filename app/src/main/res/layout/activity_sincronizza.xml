@@ -1,21 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_sfondo"
     tools:context="com.example.edoardo.luxelodge.activity.Sincronizza"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
-        <Button
+        <TextView
             android:id="@+id/btnInviaDati"
             android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_gravity="bottom"
-            android:background="#00FF00"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/mycolor"
             android:gravity="center|center_horizontal|center_vertical"
             android:onClick="downloadFile"
             android:text="SINCRONIZZA LE INFORMAZIONI"
@@ -33,38 +34,39 @@
             android:textColor="#000000"
             android:visibility="invisible" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:id="@+id/pupazzo"
-        android:background="@drawable/ic_download_act"
-        android:layout_gravity="center_horizontal|center_vertical"
-        />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:id="@+id/statopupazzo"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="IL DATABASE E' AGGIORNATO"
-        android:gravity="center"
-        android:layout_gravity="center"
-        />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:layout_gravity="left|top"
-        android:visibility="invisible"
-        android:id="@+id/txtvwresult" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="4"
+        android:background="#ffffff"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/finito"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:onClick="returntoMain"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:layout_weight="2" />
+        <TextView
+            android:id="@+id/downloadend"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:layout_height="0dp"
+            android:text="Download Completato"
+            android:textColor="@color/mycolor"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_weight="1"/>
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     </LinearLayout>
-
 </LinearLayout>

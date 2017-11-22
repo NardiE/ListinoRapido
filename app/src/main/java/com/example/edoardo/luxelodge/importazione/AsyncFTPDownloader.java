@@ -137,7 +137,7 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
 
                             public void run() {
 
-                                sincronizza.barProgressDialog.incrementProgressBy(20);
+                                sincronizza.barProgressDialog.incrementProgressBy(50);
 
                             }
 

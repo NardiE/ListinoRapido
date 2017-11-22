@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.edoardo.luxelodge.R;
 import com.example.edoardo.luxelodge.classivarie.TipoExtra;
+import com.example.edoardo.luxelodge.classivarie.TipoOp;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -20,15 +21,12 @@ public class ZxingScannerActivity extends AppCompatActivity implements ZXingScan
 
     private ZXingScannerView mScannerView;
     static final Integer CAMERA = 0x1;
-    int tipoopchiamante;
+    Scanning sc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zxing_scanner);
-
-        Bundle extras = getIntent().getExtras();
-        tipoopchiamante = extras.getInt(TipoExtra.tipoopchiamante);
 
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
@@ -90,7 +88,7 @@ public class ZxingScannerActivity extends AppCompatActivity implements ZXingScan
 
     @Override
     public void handleResult(Result result) {
-        // ritorno i valori a ModifyEl
+        String barcode = result.getText();
 
         /*Toast.makeText(this, "Contents = " + result.getText() +
                 ", Format = " + result.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
@@ -103,5 +101,9 @@ public class ZxingScannerActivity extends AppCompatActivity implements ZXingScan
                 mScannerView.resumeCameraPreview(ZxingScannerActivity.this);
             }
         }, 3000);*/
+        Intent i = new Intent(this, Scanning.class);
+        i.putExtra(TipoExtra.tipoop, TipoOp.OP_SCANNERESULT);
+        i.putExtra(TipoExtra.barcode, result.getText());
+        startActivity(i);
     }
 }

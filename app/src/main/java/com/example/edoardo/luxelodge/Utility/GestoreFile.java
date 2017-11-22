@@ -1,4 +1,4 @@
-package com.example.edoardo.luxelodge.utility;
+package com.example.edoardo.luxelodge.Utility;
 
 import android.os.Environment;
 

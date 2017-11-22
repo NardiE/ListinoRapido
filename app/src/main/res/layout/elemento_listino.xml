@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_listino"
         android:layout_marginTop="20dp"/>
 
     <TableRow

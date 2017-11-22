@@ -1,4 +1,4 @@
-package com.example.edoardo.luxelodge.utility;
+package com.example.edoardo.luxelodge.Utility;
 
 import android.app.AlertDialog;
 import android.content.Context;

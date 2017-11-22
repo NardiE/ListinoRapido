@@ -44,12 +44,23 @@ public class AsyncImporter extends AsyncTask<String, Void, Void> {
 
             public void run() {
 
-                sincronizza.barProgressDialog.incrementProgressBy(20);
+                sincronizza.barProgressDialog.incrementProgressBy(50);
 
             }
 
         });
-        sincronizza.importaBarcode();
+        importaListini();
+        sincronizza.updateBarHandler.post(new Runnable() {
+
+            public void run() {
+
+                sincronizza.barProgressDialog.incrementProgressBy(50);
+
+            }
+
+        });
+       /*
+       sincronizza.importaBarcode();
         sincronizza.updateBarHandler.post(new Runnable() {
 
             public void run() {
@@ -69,7 +80,7 @@ public class AsyncImporter extends AsyncTask<String, Void, Void> {
             }
 
         });
-        sincronizza.importaDestinazione();
+//        sincronizza.importaDestinazione();
         sincronizza.updateBarHandler.post(new Runnable() {
 
             public void run() {
@@ -79,22 +90,15 @@ public class AsyncImporter extends AsyncTask<String, Void, Void> {
             }
 
         });
-        importaListini();
-        sincronizza.updateBarHandler.post(new Runnable() {
+        */
 
-            public void run() {
-
-                sincronizza.barProgressDialog.incrementProgressBy(20);
-
-            }
-
-        });
 
         sincronizza.barProgressDialog.dismiss();
         return null;
     }
 
     protected void onPostExecute(Void unused) {
+
         sincronizza.onTaskComplete();
     }
 }

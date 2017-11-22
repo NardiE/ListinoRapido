@@ -2,6 +2,11 @@ package com.example.edoardo.luxelodge.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -11,9 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edoardo.luxelodge.R;
+import com.example.edoardo.luxelodge.classivarie.TipiConfigurazione;
 import com.example.edoardo.luxelodge.database.Articolo;
 import com.example.edoardo.luxelodge.database.Barcode;
 import com.example.edoardo.luxelodge.database.Cliente;
@@ -42,42 +50,23 @@ public class Sincronizza extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sincronizza);
         context = this;
-    }
 
-    public void downloadFile(View v){
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        // setto il titolo
+        getSupportActionBar().setTitle("Listino Rapido");
+        getSupportActionBar().setIcon(R.drawable.logomin);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logomin);
 
-        // riempio le arraylist dei file per android
-        ArrayList<File> files = new ArrayList<>(5);
-        files.add(new File(path, "ART.txt"));
-        files.add(new File(path, "LIS.txt"));
-        files.add(new File(path, "DES.txt"));
-        files.add(new File(path, "CLI.txt"));
-        files.add(new File(path, "BAR.txt"));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        // setto il titolo
+        getSupportActionBar().setTitle("Listino Rapido");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        ArrayList<String> filesname = new ArrayList<String>(5);
-        filesname.add("ART.txt");
-        filesname.add("LIS.txt");
-        filesname.add("DES.txt");
-        filesname.add("CLI.txt");
-        filesname.add("BAR.txt");
+        Typeface font = Typeface.createFromAsset(getAssets(), "font/Bauhaus.ttf");
+        TextView bd = (TextView) findViewById(R.id.downloadend);
 
-        Boolean result = false;
-        //TODO impostare parametri in impostazione
-        AsyncFTPDownloader downloader = new AsyncFTPDownloader("ftp.signorini.it", 21, "signoriniftp", "signorini", filesname, files, this);
-        downloader.execute();
-
-
-
-        barProgressDialog = new ProgressDialog(Sincronizza.this);
-
-        barProgressDialog.setTitle("Download");
-        barProgressDialog.setMessage("Sto Scaricando...");
-        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
-        barProgressDialog.setProgress(0);
-        barProgressDialog.setMax(100);
-        barProgressDialog.show();
-
+        bd.setTypeface(font);
     }
 
     @Override
@@ -101,6 +90,49 @@ public class Sincronizza extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    public void downloadFile(View v){
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // riempio le arraylist dei file per android
+        ArrayList<File> files = new ArrayList<>(2);
+        files.add(new File(path, "ART.txt"));
+        files.add(new File(path, "LIS.txt"));
+        /*files.add(new File(path, "DES.txt"));
+        files.add(new File(path, "CLI.txt"));
+        files.add(new File(path, "BAR.txt"));*/
+
+        ArrayList<String> filesname = new ArrayList<String>(2);
+        filesname.add("ART.txt");
+        filesname.add("LIS.txt");
+        /*filesname.add("DES.txt");
+        filesname.add("CLI.txt");
+        filesname.add("BAR.txt");*/
+
+        Boolean result = false;
+        //TODO impostare parametri in impostazione
+        SharedPreferences sharedpreferences = getSharedPreferences(Impostazioni.preferences, Context.MODE_PRIVATE);
+        String serverftp = sharedpreferences.getString(TipiConfigurazione.serverftp,"ftp.signorini.it");
+        Integer portaftp = sharedpreferences.getInt(TipiConfigurazione.portaftp,21);
+        String nomeutente = sharedpreferences.getString(TipiConfigurazione.nomeutente,"signoriniftp");
+        String password = sharedpreferences.getString(TipiConfigurazione.password,"signorini");
+        AsyncFTPDownloader downloader = new AsyncFTPDownloader(serverftp, portaftp, nomeutente, password, filesname, files, this);
+        downloader.execute();
+
+
+
+        barProgressDialog = new ProgressDialog(Sincronizza.this);
+
+        barProgressDialog.setTitle("Download");
+        barProgressDialog.setMessage("Sto Scaricando...");
+        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
+        barProgressDialog.setProgress(0);
+        barProgressDialog.setMax(100);
+        barProgressDialog.show();
+
+    }
+
     public void onDownloadComplete(){
         //richiamato una volta effettuato download archivi, chiama Task per importazione nel database di tutte le tabelle necessarie
 
@@ -110,11 +142,13 @@ public class Sincronizza extends AppCompatActivity {
 
         AsyncImporter importer = new AsyncImporter(this);
         importer.execute();
+
     }
 
     public void onTaskComplete(){
         //richiamato alla fine di download ed importazione
-
+        findViewById(R.id.downloadend).setVisibility(View.VISIBLE);
+        findViewById(R.id.finito).setBackgroundResource(R.drawable.ok);
     }
 
     public static void importaArticolo(){
@@ -277,10 +311,7 @@ public class Sincronizza extends AppCompatActivity {
         Destinazione.deleteAll(Destinazione.class);
         Articolo.deleteAll(Listino.class);
         //TODO Gestione eccezione
-        Cliente.executeQuery("delete from sqlite_sequence where name='CLIENTE'");
-        Barcode.executeQuery("delete from sqlite_sequence where name='BARCODE'");
         Articolo.executeQuery("delete from sqlite_sequence where name='ARTICOLO'");
-        Destinazione.executeQuery("delete from sqlite_sequence where name='DESTINAZIONE'");
         Listino.executeQuery("delete from sqlite_sequence where name='LISTINO'");
     }
 
@@ -290,19 +321,19 @@ public class Sincronizza extends AppCompatActivity {
         ArrayList <Barcode> barcode = new ArrayList<>();
         //ArrayList <Destinazione> destinazioni = new ArrayList<>();
         ArrayList <Listino> listini = new ArrayList<>();
-        clienti.add(new Cliente("codice", "descrizione", "descrizione2", "listino", "codiceblocco", "telefono", "fax", "telex", "via", "cap", "citta", "provincia", "descrizioneblocco", 0, 0));
+        //clienti.add(new Cliente("codice", "descrizione", "descrizione2", "listino", "codiceblocco", "telefono", "fax", "telex", "via", "cap", "citta", "provincia", "descrizioneblocco", 0, 0));
         articoli.add(new Articolo("codice", "descrizione", "descrizione2", "UM", 0, 0));
-        barcode.add(new Barcode("codicearticolo", "codiceabarre"));
+        //barcode.add(new Barcode("codicearticolo", "codiceabarre"));
         listini.add(new Listino("codicearticolo", "codicelistino", new Float(1.0)));
-        for (Cliente object: clienti) {
+        /*for (Cliente object: clienti) {
             object.save();
-        }
+        }*/
         for (Articolo object: articoli) {
             object.save();
         }
-        for (Barcode object: barcode) {
+        /*for (Barcode object: barcode) {
             object.save();
-        }
+        }*/
         /*for (Destinazione object: destinazioni) {
             object.save();
         }*/
@@ -310,4 +341,12 @@ public class Sincronizza extends AppCompatActivity {
             object.save();
         }
     }
+
+
+    public void returntoMain(View view) {
+        Intent i = new Intent(this,Main.class);
+        startActivity(i);
+    }
+
+
 }

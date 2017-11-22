@@ -5,37 +5,112 @@
     android:background="@color/mycolor"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_margin="20dp"
-        android:text="Scan"
-        android:textColor="#000000"
-        android:textSize="30dp" />
-    <Button
-        android:id="@+id/scanner2"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:onClick="startQrRec"
-        android:text="Bar Code"
-        android:textSize="18dp" >
-    </Button>
-
-    <Button
-        android:id="@+id/sincronizza"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:gravity="center"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/mycolor"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:onClick="sincronizza"
-        android:text="Sincronizza"
-        android:textSize="18dp"></Button>
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="sincronizza"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:text="Sincronizza"
+                android:textColor="#ffffff" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:onClick="sincronizza"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/a"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:onClick="startQrRec"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="startQrRec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:text="Cerca Articolo"
+                android:textColor="@color/mycolor" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <Button
+            android:paddingBottom="10dp"
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:onClick="startQrRec"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/b"/>
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/mycolor"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/mycolor"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 </LinearLayout>

@@ -1,8 +1,15 @@
 package com.example.edoardo.luxelodge.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,9 +18,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.edoardo.luxelodge.R;
+import com.example.edoardo.luxelodge.Utility.Utility;
 import com.example.edoardo.luxelodge.activity.Scanning;
+import com.example.edoardo.luxelodge.classivarie.TipiConfigurazione;
+import com.example.edoardo.luxelodge.classivarie.TipoExtra;
+import com.example.edoardo.luxelodge.classivarie.TipoOp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +50,28 @@ public class Main extends AppCompatActivity {
 //        insertSample();
 //        cleanUp();
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        // setto il titolo
+        getSupportActionBar().setTitle("Listino Rapido");
+        getSupportActionBar().setIcon(R.drawable.logomin);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logomin);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "font/Bauhaus.ttf");
+        TextView qt = (TextView) findViewById(R.id.textView1);
+        TextView bd = (TextView) findViewById(R.id.textView);
+
+        bd.setTypeface(font);
+        qt.setTypeface(font);
+
+
+        // controllo che le impostazioni siano inserite
+        SharedPreferences sharedpreferences = getSharedPreferences(Impostazioni.preferences, Context.MODE_PRIVATE);
+        String serverftp = sharedpreferences.getString(TipiConfigurazione.serverftp,"errore");
+        if(serverftp.equals("errore")){
+            Intent i = new Intent(this,Impostazioni.class);
+            startActivity(i);
+        }
 
     }
 
@@ -55,15 +90,51 @@ public class Main extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.impostazioni) {
+            Intent i = new Intent(this, Impostazioni.class);
+            startActivity(i);
             return true;
         }
+        if (id == R.id.info){
+            AlertDialog.Builder myb = Utility.creaDialogoVeloce(this, "Versione 1.0 \n\n Sviluppato da Signorini & C. SRL \n\n Per informazioni contattare: edoardo@signorini.it", "Informazioni");
+            myb.create().show();
+        }
+
+        if (id == R.id.clear_database){
+
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("Avviso");
+            builder.setMessage("La procedura elimina qualsiasi dato dal database e va usata solo in caso di malfunzionamenti. Al termine del ripristino sarà necessario lanciare l'allineamento clienti. Procedere?");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    cleanUp();
+                    //TODO togliere una volta finito
+                    insertSample();
+                    dialog.dismiss();
+                    return;
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    return;
+                }
+            });
+
+            builder.create().show();
+
+
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
 
     public void startQrRec(View v) {
         Intent i = new Intent(this,Scanning.class);
+        i.putExtra(TipoExtra.tipoop,TipoOp.OP_NOTHING);
         startActivity(i);
     }
 
@@ -118,4 +189,9 @@ public class Main extends AppCompatActivity {
         } catch (Exception e) {
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }

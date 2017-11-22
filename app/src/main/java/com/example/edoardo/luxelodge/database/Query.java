@@ -10,12 +10,13 @@ import java.util.List;
  */
 
 public class Query {
-    public static List<Barcode> getBarcode(String barcode){
+/*   public static List<Barcode> getBarcode(String barcode){
         String SQL1 = "SELECT * FROM BARCODE WHERE CODICEABARRE LIKE '%" + barcode + "%'";
         List<Barcode> barcodefind;
         barcodefind = Barcode.findWithQuery(Barcode.class,SQL1);
         return barcodefind;
     }
+*/
     public static List<Listino> getListino(String codicearticolo, String codicelistino){
         String SQL1 = "SELECT * FROM LISTINO WHERE CODICEARTICOLO LIKE '%" + codicearticolo + "%' AND CODICELISTINO LIKE '%" + codicelistino + "%'";
         List<Listino> listinofind;

@@ -8,106 +8,348 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#ffffff"
-        android:layout_weight="3"
-        android:paddingLeft="10dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:id="@+id/layoutsc"
+            android:background="@color/mycolor"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/testo"
+                android:textColor="#ffffff"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Clicca"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            <TextView
+                android:id="@+id/testo2"
+                android:textColor="#ffffff"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="qui a fianco"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            <TextView
+                android:id="@+id/testo3"
+                android:textColor="#ffffff"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="per iniziare"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="#ffffff"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageButton
+                android:background="#ffffff"
+                android:layout_width="0dp"
+                android:id="@+id/getcode"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/barcode"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="#ffffff"
-            android:gravity="center"
-            android:text="Barcode:"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-        <EditText
-            android:id="@+id/barcoden"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/barcoden"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="19"
+                    android:backgroundTint="@color/mycolor"
+                    android:hint="BARCODE"
+                    android:textColor="@color/mycolor"
+                    android:textColorHint="@color/mycolor" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:background="#ffffff"
-            android:paddingLeft="2dp"
-            android:hint="BARCODE"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:background="#ffffff"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:id="@+id/getcode"
+            android:background="@color/mycolor"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:scaleType="fitCenter"
-            android:background="#ffffff"
-            app:srcCompat="@drawable/barcode"
-        />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/barcodetw"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="@color/mycolor"
+                android:onClick="cercaPrezzo"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:textColor="#ffffff"
+                app:srcCompat="@drawable/cerca" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="10dp"
-        android:background="#ffffff"
-        android:layout_weight="2">
-
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="@color/mycolor"
             android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:text="Quantità: "
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-        <EditText
-            android:id="@+id/modificaquantita"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="ARTICOLO: "
+                android:id="@+id/articolotw"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
             android:background="#ffffff"
-            android:paddingLeft="2dp"
-            android:hint="10"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ems="5"
-            android:inputType="number" />
-        <TextView
-            android:layout_width="0dp"
-            android:background="#ffffff"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:background="#ffffff"
-            android:layout_height="match_parent"
-            android:layout_weight="2"/>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/valorenome"
+                    android:layout_width="0dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/mycolor"
+                    android:textColorHint="@color/mycolor"
+                    android:backgroundTint="@color/mycolor"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="end"
+                    android:layout_weight="15"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="#ffffff"></LinearLayout>
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="#ffffff"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/mycolor"
+                android:text="PREZZO: "
+                android:id="@+id/prezzotw"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="@color/mycolor"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/valoreprezzo"
+                    android:layout_width="0dp"
+                    android:textSize="30dp"
+                    android:paddingLeft="2dp"
+                    android:textColor="#ffffff"
+                    android:text="N°"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_weight="30"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#ffffff"
-        android:layout_weight="2">
-    <ImageButton
-            android:onClick="confirm"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout
             android:layout_width="0dp"
+            android:background="@color/mycolor"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="LOTTO: "
+                android:id="@+id/lottotw"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="#ffffff"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ffffff"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/conferma"
-            />
-    <ImageButton
-            android:onClick="cancel"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/valorelotto"
+                    android:layout_width="0dp"
+                    android:paddingLeft="2dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/mycolor"
+                    android:text="N°"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="end"
+                    android:layout_weight="19"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="#ffffff"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/del"
-            />
+            android:onClick="returntoMain"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:background="@color/mycolor"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:onClick="returntoMain"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/undo" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

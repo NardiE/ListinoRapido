@@ -5,7 +5,7 @@ package com.example.edoardo.luxelodge.classivarie;
  */
 
 public class TipoOp {
-    public static int OP_INSERISCI = 9000;
+    public static int OP_NOTHING = 9000;
     public static int OP_MODIFICA = 9001;
     public static int OP_CARICO = 9002;
     public static int OP_SCARICO = 9003;
