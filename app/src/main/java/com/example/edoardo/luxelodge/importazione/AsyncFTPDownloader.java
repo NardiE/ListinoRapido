@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.edoardo.luxelodge.Utility.Utility;
 import com.example.edoardo.luxelodge.activity.Sincronizza;
 import com.example.edoardo.luxelodge.gestioneerrori.LOGClass;
 
@@ -33,6 +34,7 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
     private ArrayList<File> localFiles;
     private ArrayList<Boolean> success = new ArrayList<Boolean>();
     private Sincronizza sincronizza;
+    boolean result;
 
     public String getServer() {
         return server;
@@ -94,7 +96,7 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-
+        result = true;
         FTPClient ftp = null;
         try {
             ftp = new FTPClient();
@@ -116,13 +118,12 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
                                     localFiles.get(i)));
                             success.set(i, ftp.retrieveFile(filenames.get(i), outputStream));
                             outputStream.flush();
-                            outputStream.close();
 
                         }
                         catch (Exception e) {
                             e.printStackTrace();
                             Log.e(LOGClass.IMPORTAZIONE, "Eccezione 1 non gestita");
-                            Toast.makeText(Sincronizza.context, "Eccezione 1 non gestita" + e.toString(),Toast.LENGTH_LONG).show();
+                            result = false;
                         }finally {
                             outputStream.flush();
                             outputStream.close();
@@ -131,13 +132,13 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
 
                         else{
                             Log.e(LOGClass.IMPORTAZIONE, "Copia fallita: " + filenames.get(i));
-                            Toast.makeText(Sincronizza.context, "Copia Fallita: " + filenames.get(i),Toast.LENGTH_LONG).show();;
+                            result = false;
                         }
                         sincronizza.updateBarHandler.post(new Runnable() {
 
                             public void run() {
 
-                                sincronizza.barProgressDialog.incrementProgressBy(50);
+                                sincronizza.barProgressDialog.incrementProgressBy(33);
 
                             }
 
@@ -147,13 +148,13 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
                 else{
                     // gestisco l'errore
                     Log.e(LOGClass.IMPORTAZIONE, "Gli ArrayList hanno diverse dimensioni");
-                    Toast.makeText(Sincronizza.context, "Gli ArrayList hanno diverse dimensioni",Toast.LENGTH_LONG).show();
+                    result = false;
                 }
 
             }catch (Exception e) {
                 e.printStackTrace();
-                Log.e(LOGClass.IMPORTAZIONE, "Eccezione 1 non gestita");
-                Toast.makeText(Sincronizza.context, "Eccezione 1 non gestita" + e.toString(),Toast.LENGTH_LONG).show();
+                Log.e(LOGClass.IMPORTAZIONE, "Eccezione 2 non gestita");
+                result = false;
             }finally{
                 if (outputStream != null) {
                 }
@@ -161,20 +162,11 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
         }
         catch (Exception e){
             e.printStackTrace();
-            Log.e(LOGClass.IMPORTAZIONE, "Eccezione 2 non gestita");
-            Toast.makeText(Sincronizza.context, "Eccezione 2 non gestita" + e.toString(),Toast.LENGTH_LONG).show();
+            Log.e(LOGClass.IMPORTAZIONE, "Eccezione 3 non gestita");
+            result = false;
         }
         finally {
-            if (ftp != null) {
-                try{
-                    ftp.logout();
-                    ftp.disconnect();
-                }
-                catch (IOException e){
-                    Log.e(LOGClass.IMPORTAZIONE, "Errore chiusura FTP");
-                    Toast.makeText(Sincronizza.context, "Errore Chiusura FTP",Toast.LENGTH_LONG).show();
-                }
-            }
+
         }
 
 
@@ -182,13 +174,6 @@ public class AsyncFTPDownloader extends AsyncTask<String, Void, Void> {
     }
 
     protected void onPostExecute(Void unused) {
-        Boolean result = true;
-        Iterator<Boolean> iterator = success.iterator();
-        while (iterator.hasNext()) {
-            if(iterator.next() == false) result = false;
-        }
-        //TODO quando hai fatto l'interfaccia mostra qualcosa a video
-        Toast.makeText(Sincronizza.context, "Download Terminato",Toast.LENGTH_LONG).show();
-        sincronizza.onDownloadComplete();
+        sincronizza.onDownloadComplete(result);
     }
 }

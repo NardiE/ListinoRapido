@@ -10,13 +10,7 @@ import java.util.List;
  */
 
 public class Query {
-/*   public static List<Barcode> getBarcode(String barcode){
-        String SQL1 = "SELECT * FROM BARCODE WHERE CODICEABARRE LIKE '%" + barcode + "%'";
-        List<Barcode> barcodefind;
-        barcodefind = Barcode.findWithQuery(Barcode.class,SQL1);
-        return barcodefind;
-    }
-*/
+
     public static List<Listino> getListino(String codicearticolo, String codicelistino){
         String SQL1 = "SELECT * FROM LISTINO WHERE CODICEARTICOLO LIKE '%" + codicearticolo + "%' AND CODICELISTINO LIKE '%" + codicelistino + "%'";
         List<Listino> listinofind;
@@ -26,8 +20,18 @@ public class Query {
     public static List<Articolo> getArticolo(String codicearticolo){
         String SQL1 = "SELECT * FROM ARTICOLO WHERE CODICE LIKE '%" + codicearticolo + "%'";
         List<Articolo> articolofind;
-        articolofind = Articolo.findWithQuery(Articolo.class,SQL1);
+        articolofind = Select.from(Articolo.class)
+                .where(Condition.prop("CODICE").eq(codicearticolo))
+                .list();
         return articolofind;
+    }
+    public static List<Barcode> getBarcode(String barcode){
+        String SQL1 = "SELECT * FROM BARCODE WHERE CODICEABARRE = '%" + barcode + "%'";
+        List<Barcode> barcodefind;
+        barcodefind = Select.from(Barcode.class)
+                .where(Condition.prop("CODICEABARRE").eq(barcode))
+                .list();
+        return barcodefind;
     }
 
 }

@@ -37,61 +37,37 @@ public class AsyncImporter extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-        insertSample();
         cleanUp();
         sincronizza.importaArticolo();
         sincronizza.updateBarHandler.post(new Runnable() {
 
             public void run() {
 
-                sincronizza.barProgressDialog.incrementProgressBy(50);
+                sincronizza.barProgressDialog.incrementProgressBy(33);
 
             }
 
         });
-        importaListini();
+        sincronizza.importaListini();
         sincronizza.updateBarHandler.post(new Runnable() {
 
             public void run() {
 
-                sincronizza.barProgressDialog.incrementProgressBy(50);
+                sincronizza.barProgressDialog.incrementProgressBy(33);
 
             }
 
         });
-       /*
-       sincronizza.importaBarcode();
+        sincronizza.importaBarcode();
         sincronizza.updateBarHandler.post(new Runnable() {
 
             public void run() {
 
-                sincronizza.barProgressDialog.incrementProgressBy(20);
+                sincronizza.barProgressDialog.incrementProgressBy(33);
 
             }
 
         });
-        sincronizza.importaCliente();
-        sincronizza.updateBarHandler.post(new Runnable() {
-
-            public void run() {
-
-                sincronizza.barProgressDialog.incrementProgressBy(20);
-
-            }
-
-        });
-//        sincronizza.importaDestinazione();
-        sincronizza.updateBarHandler.post(new Runnable() {
-
-            public void run() {
-
-                sincronizza.barProgressDialog.incrementProgressBy(20);
-
-            }
-
-        });
-        */
-
 
         sincronizza.barProgressDialog.dismiss();
         return null;

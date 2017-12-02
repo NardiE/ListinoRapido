@@ -58,16 +58,10 @@ public class Scanning extends AppCompatActivity {
         TextView qt = (TextView) findViewById(R.id.prezzotw);
         TextView qt1 = (TextView) findViewById(R.id.lottotw);
         TextView qt2 = (TextView) findViewById(R.id.articolotw);
-        TextView bd = (TextView) findViewById(R.id.valoreprezzo);
-        TextView bd1 = (TextView) findViewById(R.id.valorelotto);
-        TextView bd2 = (TextView) findViewById(R.id.valorenome);
         TextView t1 = (TextView) findViewById(R.id.testo);
         TextView t2 = (TextView) findViewById(R.id.testo2);
         TextView t3 = (TextView) findViewById(R.id.testo3);
         EditText bde = (EditText) findViewById(R.id.barcoden);
-        bd.setTypeface(font);
-        bd1.setTypeface(font);
-        bd2.setTypeface(font);
         bde.setTypeface(font);
         t1.setTypeface(font);
         t2.setTypeface(font);
@@ -151,30 +145,53 @@ public class Scanning extends AppCompatActivity {
         TextView valoreprezzo = (TextView) findViewById(R.id.valoreprezzo);
         TextView valorelotto = (TextView) findViewById(R.id.valorelotto);
         TextView valorenome = (TextView) findViewById(R.id.valorenome);
+        String codicearticolo;
 
-        String codicearticolo = barcoden.getText().toString();
+        String codiceabarre = barcoden.getText().toString();
+
+        //formatto il barcode
+        codiceabarre = formattastringa(codiceabarre, Barcode.barcode_lenght);
+
+        //provo a cercare barcode
+        List <Barcode> listabarcode = Query.getBarcode(codiceabarre);
+
+        if(listabarcode.size()==0){
+            codicearticolo = barcoden.getText().toString();
+            codicearticolo = formattastringa(codicearticolo, Articolo.lenght_codice);
+        }
+        else{
+            codicearticolo = listabarcode.get(0).getCodicearticolo();
+        }
+
+
         myartlist = Query.getArticolo(codicearticolo);
         if(myartlist.size() == 1){
             Articolo myart = myartlist.get(0);
-            //TODO PARAMETRIZZARE
             SharedPreferences sharedpreferences = getSharedPreferences(Impostazioni.preferences, Context.MODE_PRIVATE);
             String listino = sharedpreferences.getString(TipiConfigurazione.listinodefault,"001");
+            valorenome.setText(myart.getDescrizione().toString());
+            valorelotto.setText(myart.getLotto_vendita());
             mylislist = Query.getListino(codicearticolo,listino);
             if(mylislist.size() == 1){
                 Listino mylis = mylislist.get(0);
-                valoreprezzo.setText(mylis.getPrezzo().toString() + " €");
+                valoreprezzo.setText(mylis.getPrezzo1().toString() + " €");
                 //TODO implementare valore lotto
-                valorelotto.setText("");
-                valorenome.setText(myart.getDescrizione().toString());
             }
             else {
-                Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Impossibile Trovare Prezzo Articolo \n assicurari di avere un listino aggiornato \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
             }
         }
         else {
             Toast.makeText(this,"Impossibile Trovare Barcode \n assicurari di aver digitato correttamente \n oppure eseguire la sincronizzazione",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public String formattastringa(String s, int lenght){
+        while (s.length() != lenght){
+            s = s + " ";
+        }
+        return s;
     }
 
     @Override

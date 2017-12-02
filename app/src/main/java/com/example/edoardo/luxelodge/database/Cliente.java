@@ -1,18 +1,12 @@
 package com.example.edoardo.luxelodge.database;
 
 import com.orm.SugarRecord;
-import com.orm.query.Select;
-
-import java.util.List;
 
 public class Cliente extends SugarRecord<Cliente> {
-    // codice, descrizione, descrizione2, listino, codice_blocco, telefono, fax, telex, via, cap, citta, provincia, descrizione_blocco, blocco, fuorifido
-    int id;
     private String codice;
     private String descrizione;
     private String descrizione2;
     private String listino;
-    private String codiceblocco;
     private String telefono;
     private String fax;
     private String telex;
@@ -20,20 +14,24 @@ public class Cliente extends SugarRecord<Cliente> {
     private String cap;
     private String citta;
     private String provincia;
-    private String descrizioneblocco;
-    private int blocco;
-    private int fuorifido;
+    private String descrizione_blocco;
+    private String blocco;
+    private String fuorifido;
+    private String email;
+    private String codicepagamento;
+    private String descrizionepagamento;
+    private String banca;
+    private String vettore1;
+    private String vettore2;
 
     public Cliente(){
     }
 
-    public Cliente(int id, String codice, String descrizione, String descrizione2, String listino, String codiceblocco, String telefono, String fax, String telex, String via, String cap, String citta, String provincia, String descrizioneblocco, int blocco, int fuorifido) {
-        this.id = id;
+    public Cliente(String codice, String descrizione, String descrizione2, String listino, String telefono, String fax, String telex, String via, String cap, String citta, String provincia, String descrizione_blocco, String blocco, String fuorifido, String email, String codicepagamento, String descrizionepagamento, String banca, String vettore1, String vettore2) {
         this.codice = codice;
         this.descrizione = descrizione;
         this.descrizione2 = descrizione2;
         this.listino = listino;
-        this.codiceblocco = codiceblocco;
         this.telefono = telefono;
         this.fax = fax;
         this.telex = telex;
@@ -41,44 +39,15 @@ public class Cliente extends SugarRecord<Cliente> {
         this.cap = cap;
         this.citta = citta;
         this.provincia = provincia;
-        this.descrizioneblocco = descrizioneblocco;
+        this.descrizione_blocco = descrizione_blocco;
         this.blocco = blocco;
         this.fuorifido = fuorifido;
-    }
-
-    public Cliente( String codice, String descrizione, String descrizione2, String listino, String codiceblocco, String telefono, String fax, String telex, String via, String cap, String citta, String provincia, String descrizioneblocco, int blocco, int fuorifido) {
-        this.codice = codice;
-        this.descrizione = descrizione;
-        this.descrizione2 = descrizione2;
-        this.listino = listino;
-        this.codiceblocco = codiceblocco;
-        this.telefono = telefono;
-        this.fax = fax;
-        this.telex = telex;
-        this.via = via;
-        this.cap = cap;
-        this.citta = citta;
-        this.provincia = provincia;
-        this.descrizioneblocco = descrizioneblocco;
-        this.blocco = blocco;
-        this.fuorifido = fuorifido;
-    }
-
-    public Cliente(String codice, String descrizione, String descrizione2, String listino, String codiceblocco, String telefono, String fax, String telex, String via, String cap, String citta, String provincia, String descrizioneblocco, int blocco) {
-        this.codice = codice;
-        this.descrizione = descrizione;
-        this.descrizione2 = descrizione2;
-        this.listino = listino;
-        this.codiceblocco = codiceblocco;
-        this.telefono = telefono;
-        this.fax = fax;
-        this.telex = telex;
-        this.via = via;
-        this.cap = cap;
-        this.citta = citta;
-        this.provincia = provincia;
-        this.descrizioneblocco = descrizioneblocco;
-        this.blocco = blocco;
+        this.email = email;
+        this.codicepagamento = codicepagamento;
+        this.descrizionepagamento = descrizionepagamento;
+        this.banca = banca;
+        this.vettore1 = vettore1;
+        this.vettore2 = vettore2;
     }
 
     public String getCodice() {
@@ -111,14 +80,6 @@ public class Cliente extends SugarRecord<Cliente> {
 
     public void setListino(String listino) {
         this.listino = listino;
-    }
-
-    public String getCodiceblocco() {
-        return codiceblocco;
-    }
-
-    public void setCodiceblocco(String codiceblocco) {
-        this.codiceblocco = codiceblocco;
     }
 
     public String getTelefono() {
@@ -177,38 +138,75 @@ public class Cliente extends SugarRecord<Cliente> {
         this.provincia = provincia;
     }
 
-    public String getDescrizioneblocco() {
-        return descrizioneblocco;
+    public String getDescrizione_blocco() {
+        return descrizione_blocco;
     }
 
-    public void setDescrizioneblocco(String descrizioneblocco) {
-        this.descrizioneblocco = descrizioneblocco;
+    public void setDescrizione_blocco(String descrizione_blocco) {
+        this.descrizione_blocco = descrizione_blocco;
     }
 
-    public int getBlocco() {
+    public String getBlocco() {
         return blocco;
     }
 
-    public void setBlocco(int blocco) {
+    public void setBlocco(String blocco) {
         this.blocco = blocco;
     }
 
-    public int getFuorifido() {
+    public String getFuorifido() {
         return fuorifido;
     }
 
-    public void setFuorifido(int fuorifido) {
+    public void setFuorifido(String fuorifido) {
         this.fuorifido = fuorifido;
     }
 
-    public static List<Cliente> getClientsSearching(String param){
-        String SQL1 = "SELECT * FROM Cliente WHERE codice LIKE '%" + param + "%' OR descrizione LIKE '%" + param + "%'";
-        List<Cliente> clientsfind;
-        clientsfind = Cliente.findWithQuery(Cliente.class,SQL1);
-        return clientsfind;
+    public String getEmail() {
+        return email;
     }
 
-    public static List<Cliente> getTop100Items(){
-        return Select.from(Cliente.class).limit("100").list();
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCodicepagamento() {
+        return codicepagamento;
+    }
+
+    public void setCodicepagamento(String codicepagamento) {
+        this.codicepagamento = codicepagamento;
+    }
+
+    public String getDescrizionepagamento() {
+        return descrizionepagamento;
+    }
+
+    public void setDescrizionepagamento(String descrizionepagamento) {
+        this.descrizionepagamento = descrizionepagamento;
+    }
+
+    public String getBanca() {
+        return banca;
+    }
+
+    public void setBanca(String banca) {
+        this.banca = banca;
+    }
+
+    public String getVettore1() {
+        return vettore1;
+    }
+
+    public void setVettore1(String vettore1) {
+        this.vettore1 = vettore1;
+    }
+
+    public String getVettore2() {
+        return vettore2;
+    }
+
+    public void setVettore2(String vettore2) {
+        this.vettore2 = vettore2;
     }
 }

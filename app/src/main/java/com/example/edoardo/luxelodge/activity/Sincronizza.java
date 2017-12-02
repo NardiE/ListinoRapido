@@ -9,18 +9,17 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edoardo.luxelodge.R;
+import com.example.edoardo.luxelodge.Utility.Utility;
 import com.example.edoardo.luxelodge.classivarie.TipiConfigurazione;
 import com.example.edoardo.luxelodge.database.Articolo;
 import com.example.edoardo.luxelodge.database.Barcode;
@@ -35,10 +34,8 @@ import com.example.edoardo.luxelodge.importazione.ImportazioneHelper;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Sincronizza extends AppCompatActivity {
     public static Context context;
@@ -100,15 +97,15 @@ public class Sincronizza extends AppCompatActivity {
         files.add(new File(path, "ART.txt"));
         files.add(new File(path, "LIS.txt"));
         /*files.add(new File(path, "DES.txt"));
-        files.add(new File(path, "CLI.txt"));
-        files.add(new File(path, "BAR.txt"));*/
+        files.add(new File(path, "CLI.txt"));*/
+        files.add(new File(path, "BAR.txt"));
 
         ArrayList<String> filesname = new ArrayList<String>(2);
         filesname.add("ART.txt");
         filesname.add("LIS.txt");
         /*filesname.add("DES.txt");
-        filesname.add("CLI.txt");
-        filesname.add("BAR.txt");*/
+        filesname.add("CLI.txt");*/
+        filesname.add("BAR.txt");
 
         Boolean result = false;
         //TODO impostare parametri in impostazione
@@ -139,15 +136,24 @@ public class Sincronizza extends AppCompatActivity {
 
     }
 
-    public void onDownloadComplete(){
+    public void onDownloadComplete(boolean result){
         //richiamato una volta effettuato download archivi, chiama Task per importazione nel database di tutte le tabelle necessarie
+        if(result) {
+            barProgressDialog.setProgress(0);
+            barProgressDialog.setTitle("Importazione");
+            barProgressDialog.setMessage("Sto Importando...");
 
-        barProgressDialog.setProgress(0);
-        barProgressDialog.setTitle("Importazione");
-        barProgressDialog.setMessage("Sto Importando...");
-
-        AsyncImporter importer = new AsyncImporter(this);
-        importer.execute();
+            AsyncImporter importer = new AsyncImporter(this);
+            importer.execute();
+        }
+        else{
+            barProgressDialog.dismiss();
+            TextView finito = (TextView)findViewById(R.id.downloadend);
+            finito.setText("Errore, controllare la connessione");
+            finito.setTextColor(Color.RED);
+            finito.setVisibility(View.VISIBLE);
+            findViewById(R.id.finito).setBackgroundResource(R.drawable.no);
+        }
 
     }
 
@@ -310,6 +316,16 @@ public class Sincronizza extends AppCompatActivity {
         }
     }
 
+    public void showmessage(final String message, final String title){
+        runOnUiThread(new Runnable(){
+
+            @Override
+            public void run(){
+                Utility.creaDialogoVeloce(context, message, title);
+            }
+        });
+    }
+
     public static void cleanUp(){
         Cliente.deleteAll(Cliente.class);
         Barcode.deleteAll(Barcode.class);
@@ -322,37 +338,16 @@ public class Sincronizza extends AppCompatActivity {
     }
 
     public static void insertSample(){
-        ArrayList <Cliente> clienti = new ArrayList<>();
-        ArrayList <Articolo> articoli = new ArrayList<>();
-        ArrayList <Barcode> barcode = new ArrayList<>();
-        //ArrayList <Destinazione> destinazioni = new ArrayList<>();
-        ArrayList <Listino> listini = new ArrayList<>();
-        //clienti.add(new Cliente("codice", "descrizione", "descrizione2", "listino", "codiceblocco", "telefono", "fax", "telex", "via", "cap", "citta", "provincia", "descrizioneblocco", 0, 0));
-        articoli.add(new Articolo("codice", "descrizione", "descrizione2", "UM", 0, 0));
-        //barcode.add(new Barcode("codicearticolo", "codiceabarre"));
-        listini.add(new Listino("codicearticolo", "codicelistino", new Float(1.0)));
-        /*for (Cliente object: clienti) {
-            object.save();
-        }*/
-        for (Articolo object: articoli) {
-            object.save();
-        }
-        /*for (Barcode object: barcode) {
-            object.save();
-        }*/
-        /*for (Destinazione object: destinazioni) {
-            object.save();
-        }*/
-        for (Listino object: listini) {
-            object.save();
-        }
     }
-
 
     public void returntoMain(View view) {
         Intent i = new Intent(this,Main.class);
         startActivity(i);
     }
 
+
+    @Override
+    public void onBackPressed() {//ritorno alla schermata precedente
+    }
 
 }

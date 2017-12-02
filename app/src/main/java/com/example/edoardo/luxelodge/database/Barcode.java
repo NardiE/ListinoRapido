@@ -6,6 +6,7 @@ import com.orm.SugarRecord;
  * Created by edoardo on 20/12/16.
  */
 public class Barcode extends SugarRecord<Barcode> {
+    public static int barcode_lenght = 30;
     int id;
     String codicearticolo;
     String codiceabarre;

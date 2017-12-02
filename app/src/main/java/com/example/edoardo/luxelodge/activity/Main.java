@@ -34,7 +34,6 @@ import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
 import static com.example.edoardo.luxelodge.activity.Sincronizza.cleanUp;
-import static com.example.edoardo.luxelodge.activity.Sincronizza.insertSample;
 
 
 public class Main extends AppCompatActivity {
@@ -109,8 +108,6 @@ public class Main extends AppCompatActivity {
             builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     cleanUp();
-                    //TODO togliere una volta finito
-                    insertSample();
                     dialog.dismiss();
                     return;
                 }
@@ -173,8 +170,8 @@ public class Main extends AppCompatActivity {
                 Log.d("Test", "sdcard state: " + state);
             }
             if (sd.canWrite()) {
-                String currentDBPath = "/data/data/" + getPackageName() + "/databases/listinoveloce.db";
-                String backupDBPath = "listinoveloce.db";
+                String currentDBPath = "/data/data/" + getPackageName() + "/databases/listino.db";
+                String backupDBPath = "listino.db";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
 

@@ -1,43 +1,38 @@
 package com.example.edoardo.luxelodge.database;
 
 import com.orm.SugarRecord;
-import com.orm.query.Condition;
-import com.orm.query.Select;
-
-import java.util.List;
 
 public class Articolo extends SugarRecord<Articolo> {
     // codice, descrizione, descrizione2, UM, esistenza, numeropezzi
+    public static int lenght_codice = 15;
     private String codice;
     private String descrizione;
     private String descrizione2;
     private String UM;
-    private float esistenza;
-    private float numeropezzi;
+    private String me;
+    private String inventario;
+    private String cm;
+    private String esistenza;
+    private String pezzi_confezione;
+    private String lotto_vendita;
+    private String lotto_riordino;
 
     public Articolo(){
     }
 
-
-    public Articolo(String codice, String descrizione, String descrizione2, String UM, float esistenza, float numeropezzi) {
+    public Articolo(String codice, String descrizione, String descrizione2, String UM, String me, String inventario, String cm, String esistenza, String pezzi_confezione, String lotto_vendita, String lotto_riordino) {
         this.codice = codice;
         this.descrizione = descrizione;
         this.descrizione2 = descrizione2;
         this.UM = UM;
+        this.me = me;
+        this.inventario = inventario;
+        this.cm = cm;
         this.esistenza = esistenza;
-        this.numeropezzi = numeropezzi;
+        this.pezzi_confezione = pezzi_confezione;
+        this.lotto_vendita = lotto_vendita;
+        this.lotto_riordino = lotto_riordino;
     }
-
-
-    public Articolo(String codice, String descrizione, String descrizione2, String UM, int esistenza, int numeropezzi){
-        this.setCodice(codice);
-        this.setDescrizione(descrizione);
-        this.setDescrizione2(descrizione2);
-        this.setUM(UM);
-        this.setEsistenza(esistenza);
-        this.setNumeropezzi(numeropezzi);
-    }
-
 
     public String getCodice() {
         return codice;
@@ -71,41 +66,59 @@ public class Articolo extends SugarRecord<Articolo> {
         this.UM = UM;
     }
 
-    public float getEsistenza() {
+    public String getMe() {
+        return me;
+    }
+
+    public void setMe(String me) {
+        this.me = me;
+    }
+
+    public String getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(String inventario) {
+        this.inventario = inventario;
+    }
+
+    public String getCm() {
+        return cm;
+    }
+
+    public void setCm(String cm) {
+        this.cm = cm;
+    }
+
+    public String getEsistenza() {
         return esistenza;
     }
 
-    public void setEsistenza(float esistenza) {
+    public void setEsistenza(String esistenza) {
         this.esistenza = esistenza;
     }
 
-    public float getNumeropezzi() {
-        return numeropezzi;
+    public String getPezzi_confezione() {
+        return pezzi_confezione;
     }
 
-    public void setNumeropezzi(float numeropezzi) {
-        this.numeropezzi = numeropezzi;
+    public void setPezzi_confezione(String pezzi_confezione) {
+        this.pezzi_confezione = pezzi_confezione;
     }
 
-    public static List<Articolo> getItemsSearching(String param){
-        String SQL1 = "SELECT * FROM Articolo WHERE codice LIKE '%" + param + "%' OR descrizione LIKE '%" + param + "%'";
-        List<Articolo> articolofind;
-        articolofind = Articolo.findWithQuery(Articolo.class,SQL1);
-        return articolofind;
+    public String getLotto_vendita() {
+        return lotto_vendita;
     }
 
-    public static List<Articolo> getAll(){
-        return Select.from(Articolo.class).list();
+    public void setLotto_vendita(String lotto_vendita) {
+        this.lotto_vendita = lotto_vendita;
     }
 
-    public static List<Articolo> getTop100Items(){
-        return Select.from(Articolo.class).limit("100").list();
+    public String getLotto_riordino() {
+        return lotto_riordino;
     }
 
-    public static List<Articolo> getTop100ItemsbyParam(String param){
-        return Select.from(Articolo.class)
-                .where(Condition.prop("codice").like(param),
-                        Condition.prop("descrizione").like(param))
-                .limit("100").list();
+    public void setLotto_riordino(String lotto_riordino) {
+        this.lotto_riordino = lotto_riordino;
     }
 }
